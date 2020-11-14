@@ -30,15 +30,19 @@ class process(Thread):
         inpPass = driver[self.count].find_element_by_xpath("""//*[@id="pass"]""")
         inpPass.send_keys(passw)
         inpPass.send_keys(Keys.RETURN)
-        confirm = waitX(wait[self.count], """//*[@id="live-daily-chart"]/li[2]/div""")
-        songtotal = driver[self.count].find_elements_by_class_name("song_total")
-        for i in songtotal:
-            child = i.find_element_by_class_name("name").get_attribute('innerHTML')
-            if child == "Hoa Hải Đường":
-                vote = i.find_element_by_class_name("vote-btn")
-                e = threading.Event()
-                while not e.wait(910):
-                    vote.click()
+        e = threading.Event()
+        while not e.wait(910):
+            confirm = waitX(wait[self.count], """//*[@id="live-daily-chart"]/li[2]/div""")
+            songtotal = driver[self.count].find_elements_by_class_name("song_total")
+            for i in songtotal:
+                child = i.find_element_by_class_name("name").get_attribute('innerHTML')
+                if child == "Hoa Hải Đường":
+                    voteH = i.find_element_by_class_name("vote-btn").click()
+                if child == "Sóng Gió":
+                    voteS = i.find_element_by_class_name("vote-btn").click()
+                if child == "Em Gì Ơi":
+                    voteE = i.find_element_by_class_name("vote-btn").click()
+            driver[self.count].navigate("https://hot14.vn/")
 
 acc1 = process(0, "minh7cpht@gmail.com:tonyandtony2k32k3")
 acc2 = process(1, "tony_yeon_parker@protonmail.com:tonyandtony2k32k3")
